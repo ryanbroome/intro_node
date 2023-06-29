@@ -1,0 +1,14 @@
+{
+  "name": "node-cat",
+  "version": "1.0.0",
+  "description": "\"school project learning how to use node\"",
+  "main": "step1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ryan",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0"
+  }
+}
