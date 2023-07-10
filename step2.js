@@ -1,33 +1,28 @@
 const fs = require("fs");
-
 const axios = require("axios");
-
+const s1 = require("./step1.js");
 let args = process.argv;
 
-function cat(path) {
-  fs.readFile(`${path}`, "utf8", (err, data) => {
-    if (err) {
-      console.log(err);
-      process.kill();
-    }
-    console.log(data);
-  });
-}
-
+// read file at path and print it out, use async function to wait for result before proceeding.
 async function webCat(url) {
-  let res = axios.get(`${url}`);
-  let response = await res;
-  console.log(response.data);
-}
-
-function start() {
-  if (args[2]) {
-    if (args[2].slice(0, 4) === "http") {
-      webCat(args[2]);
-    } else {
-      cat(args[2]);
-    }
+  try {
+    let res = await axios.get(url);
+    console.log(res.data);
+  } catch (err) {
+    console.error(`error fetching: ${url}: ${err}`);
+    process.exit(1);
   }
 }
 
-start();
+let path = args[2];
+
+if (path.slice(0, 4) === "http") {
+  webCat(path);
+} else {
+  s1.cat(path);
+}
+
+module.exports = {
+  cat: s1.cat,
+  webCat: webCat,
+};
